@@ -41,13 +41,13 @@ export class UserRoutes {
     router.post('/register', controller.register);
     router.post('/login', controller.login);
     router.get('/validate-account/:token', controller.validateAccount);
+    router.get('/:id', controller.findOne);
     router.use(AuthMiddleware.protect);
     router.get(
       '/',
       AuthMiddleware.restrictTo(UserRole.ADMIN),
       controller.findAll
     );
-    router.get('/:id', controller.findOne);
     router.patch(
       '/:id',
       AuthMiddleware.restrictTo(UserRole.ADMIN),
