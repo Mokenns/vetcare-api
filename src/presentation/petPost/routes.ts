@@ -42,7 +42,7 @@ export class PetPostRoutes {
     router.get('/:id', controller.findOne);
     router.patch(
       '/:id',
-      AuthMiddleware.restrictTo(UserRole.USER),
+      AuthMiddleware.restrictTo(UserRole.ADMIN),
       controller.update
     );
     router.delete(
