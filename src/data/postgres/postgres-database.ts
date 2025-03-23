@@ -4,7 +4,10 @@ import { Pet } from './models/pet.model';
 import { Doctor } from './models/doctor.model';
 import { Specie } from './models/specie.model';
 import { Appointment } from './models/appointment.model';
+<<<<<<< HEAD
 import { PetPost } from './models/petPost.model';
+=======
+>>>>>>> eae1636dc935a889ccad3ace04f19a841275b869
 
 interface Options {
   host: string;
@@ -54,7 +57,11 @@ export class PostgresDatabase {
       password: options.password,
       database: options.database,
       synchronize: true,
+<<<<<<< HEAD
       entities: [User, Pet, Doctor, Specie, Appointment, PetPost],
+=======
+      entities: [User, Pet, Doctor, Specie, Appointment],
+>>>>>>> eae1636dc935a889ccad3ace04f19a841275b869
       ssl: {
         rejectUnauthorized: false,
       },
