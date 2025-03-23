@@ -7,6 +7,8 @@ import { UpdatePetPostService } from './services/update-petpost.service';
 import { DeletePetPostService } from './services/delete-petpost.service';
 import { ApprovePetPostService } from './services/approve-petpost.service';
 import { RejectPetPostService } from './services/reject-petpost.service';
+import { AuthMiddleware } from '../common/middlewares/auth.middleware';
+import { UserRole } from '../../data/postgres/models/user.model';
 
 export class PetPostRoutes {
   static get routes(): Router {
@@ -30,13 +32,34 @@ export class PetPostRoutes {
       RejectPetPost
     );
 
+    router.use(AuthMiddleware.protect);
     router.get('/', controller.findAll);
-    router.post('/', controller.create);
+    router.post(
+      '/',
+      AuthMiddleware.restrictTo(UserRole.USER),
+      controller.create
+    );
     router.get('/:id', controller.findOne);
-    router.patch('/:id', controller.update);
-    router.delete('/:id', controller.delete);
-    router.patch('/:id/approve', controller.approve);
-    router.patch('/:id/reject', controller.reject);
+    router.patch(
+      '/:id',
+      AuthMiddleware.restrictTo(UserRole.USER),
+      controller.update
+    );
+    router.delete(
+      '/:id',
+      AuthMiddleware.restrictTo(UserRole.ADMIN),
+      controller.delete
+    );
+    router.patch(
+      '/:id/approve',
+      AuthMiddleware.restrictTo(UserRole.ADMIN),
+      controller.approve
+    );
+    router.patch(
+      '/:id/reject',
+      AuthMiddleware.restrictTo(UserRole.ADMIN),
+      controller.reject
+    );
 
     return router;
   }
